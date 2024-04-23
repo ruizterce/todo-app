@@ -1,7 +1,7 @@
 import './style.css';
 import Project from './project.js';
 import Todo from './todo.js';
-import {loadTodo, loadProject} from './DOMHandler.js'
+import { loadTodo, loadProject, createTodoPopup } from './DOMHandler.js'
 
 const contentDiv = document.querySelector('#content');
 
@@ -9,7 +9,7 @@ const contentDiv = document.querySelector('#content');
 //Create a new project
 const project1 = new Project('Project 1');
 //Create a new todo and add it to the project
-const todo1 = new Todo('Hey','Desc','12-07-2024','low');
+const todo1 = new Todo('Hey', 'Desc', '12-07-2024', 'low');
 project1.addTodo(todo1);
 //Load the project into the DOM
-contentDiv.appendChild(loadProject(project1));
+loadProject(contentDiv, project1);
