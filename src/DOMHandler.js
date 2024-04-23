@@ -1,4 +1,5 @@
 import Todo from "./todo";
+import Project from "./project"
 
 //Create a DOM element displaying the information of a todo and append itself to a parent container.
 const loadTodo = (parentContainer, todo) => {
@@ -56,7 +57,7 @@ const loadProject = (parentContainer, project) => {
         container.appendChild(removeTodoBtn);
     });
 
-    //Create and append a button that will show a form to create a todo in this project
+    //Create and append a button that will show formDiv
     const openCreateTodoForm = document.createElement('button');
     openCreateTodoForm.type = 'button';
     openCreateTodoForm.textContent = 'Add Todo';
@@ -133,4 +134,68 @@ const createTodoForm = (parentContainer, project) => {
     return formDiv;
 }
 
-export { loadTodo, loadProject, createTodoForm };
+//Create a DOM element displaying a list of projects, and append itself to a parent container.
+const loadProjectList = (parentContainer, projectsArray) => {
+
+    //Empty parent container
+    parentContainer.innerHTML = '';
+
+    //Create a container for the list
+    const container = document.createElement('div');
+
+    //Create and append title element
+    const title = document.createElement('h2');
+    title.textContent = 'Projects';
+    container.appendChild(title);
+
+    //Create and append a list of projects
+    const projectsList = document.createElement('ul');
+    projectsArray.forEach((e) => {
+        const projectTitle = document.createElement('li');
+        projectTitle.textContent = e.title;
+        projectsList.appendChild(projectTitle);
+    })
+    container.appendChild(projectsList);
+
+    //Create and append a button to add a new project
+    const addProjectBtn = document.createElement('button');
+    addProjectBtn.type = 'button';
+    addProjectBtn.textContent = 'Add Project';
+    addProjectBtn.addEventListener('click', () => {
+        addProjectBtn.disabled = true;
+
+        //Create an input element for the project's title
+        const projectTitle = document.createElement('input');
+        projectTitle.placeholder = 'Project Title';
+        container.appendChild(projectTitle);
+
+        //Add a button to confirm project's creation
+        const createProjectBtn = document.createElement('button');
+        createProjectBtn.type = 'button';
+        createProjectBtn.textContent = 'Create';
+        createProjectBtn.addEventListener('click', () => {
+            const project = new Project(projectTitle.value, projectsArray);
+            loadProjectList(parentContainer, projectsArray);
+        })
+        container.appendChild(createProjectBtn);
+
+        //Add a button to cancel project's creation
+        const cancelCreateProjectBtn = document.createElement('button');
+        cancelCreateProjectBtn.type = 'button';
+        cancelCreateProjectBtn.textContent = 'Cancel';
+        cancelCreateProjectBtn.addEventListener('click',()=>{
+            addProjectBtn.disabled = false;
+            cancelCreateProjectBtn.remove();
+            createProjectBtn.remove();
+            projectTitle.remove();
+        })
+        container.appendChild(cancelCreateProjectBtn);
+
+    })
+    container.appendChild(addProjectBtn);
+
+    parentContainer.appendChild(container);
+}
+
+export { loadTodo, loadProject, createTodoForm, loadProjectList };
+

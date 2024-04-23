@@ -1,7 +1,8 @@
 export default class Project{
-    constructor(title){
+    constructor(title, array){
         this.title = title;
         this.todos = [];
+        array.push(this);
     }
 
     addTodo(todo){

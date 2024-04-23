@@ -1,0 +1,21 @@
+body {
+    font-size: max(2vh, 18px);
+    margin: 0px;
+}
+
+header {
+    width: 150px;
+    float: left;
+    display: inline;
+    margin: 0;
+    padding: 0 20px;
+    background-color: aquamarine;
+}
+
+#content {
+    background-color: aqua;
+    float: left;
+    margin: 0;
+    padding: 0 20px;
+    display: inline;
+}
