@@ -15,6 +15,6 @@ const todo1 = new Todo('Hey', 'Desc', '12-07-2024', 'low');
 project1.addTodo(todo1);
 
 //Load the project list into the nav bar
-loadProjectList(nav, projects);
+loadProjectList(contentDiv,nav, projects);
 //Load the project into the DOM
 loadProject(contentDiv, projects[0]);

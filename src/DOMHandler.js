@@ -135,7 +135,7 @@ const createTodoForm = (parentContainer, project) => {
 }
 
 //Create a DOM element displaying a list of projects, and append itself to a parent container.
-const loadProjectList = (parentContainer, projectsArray) => {
+const loadProjectList = (contentContainer, parentContainer, projectsArray) => {
 
     //Empty parent container
     parentContainer.innerHTML = '';
@@ -151,9 +151,15 @@ const loadProjectList = (parentContainer, projectsArray) => {
     //Create and append a list of projects
     const projectsList = document.createElement('ul');
     projectsArray.forEach((e) => {
-        const projectTitle = document.createElement('li');
-        projectTitle.textContent = e.title;
-        projectsList.appendChild(projectTitle);
+        const projectLi= document.createElement('li');
+        const projectBtn = document.createElement('button');
+        projectBtn.type = 'button';
+        projectBtn.textContent = e.title;
+        projectBtn.addEventListener('click', () => {
+        loadProject(contentContainer, e);
+        });
+        projectLi.appendChild(projectBtn);
+        projectsList.appendChild(projectLi);
     })
     container.appendChild(projectsList);
 
@@ -175,7 +181,7 @@ const loadProjectList = (parentContainer, projectsArray) => {
         createProjectBtn.textContent = 'Create';
         createProjectBtn.addEventListener('click', () => {
             const project = new Project(projectTitle.value, projectsArray);
-            loadProjectList(parentContainer, projectsArray);
+            loadProjectList(contentContainer, parentContainer, projectsArray);
         })
         container.appendChild(createProjectBtn);
 
@@ -183,7 +189,7 @@ const loadProjectList = (parentContainer, projectsArray) => {
         const cancelCreateProjectBtn = document.createElement('button');
         cancelCreateProjectBtn.type = 'button';
         cancelCreateProjectBtn.textContent = 'Cancel';
-        cancelCreateProjectBtn.addEventListener('click',()=>{
+        cancelCreateProjectBtn.addEventListener('click', () => {
             addProjectBtn.disabled = false;
             cancelCreateProjectBtn.remove();
             createProjectBtn.remove();
