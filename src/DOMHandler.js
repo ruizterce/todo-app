@@ -68,14 +68,14 @@ const loadProject = (parentContainer, project, projectsList, projectsListContain
     parentContainer.appendChild(container);
 
     //Create and append a form to create a todo (hidden by default)
-    const formDiv = createTodoForm(parentContainer, project, projectsList);
+    const formDiv = createTodoForm(parentContainer, project, projectsList, projectsListContainer);
 
     const removeProjectBtn = document.createElement('button');
-    removeProjectBtn.textContent='Remove Project';
-    removeProjectBtn.addEventListener('click',()=>{
+    removeProjectBtn.textContent = 'Remove Project';
+    removeProjectBtn.addEventListener('click', () => {
         projectsList.removeProject(project);
-        loadProjectsList(parentContainer,projectsListContainer,projectsList);
-        parentContainer.innerHTML='';
+        loadProjectsList(parentContainer, projectsListContainer, projectsList);
+        parentContainer.innerHTML = '';
     })
     parentContainer.appendChild(removeProjectBtn);
 }
@@ -145,7 +145,6 @@ const createTodoForm = (parentContainer, project, projectsList, projectsListCont
 
 //Create a DOM element displaying a list of projects, and append itself to a parent container.
 const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
-
     //Empty parent container
     parentContainer.innerHTML = '';
 
@@ -160,13 +159,13 @@ const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
     //Create and append a list of projects
     const projectsUl = document.createElement('ul');
     projectsList.projects.forEach((e) => {
-        const projectLi= document.createElement('li');
+        const projectLi = document.createElement('li');
         //Add a projectBtn that calls loadProject
         const projectBtn = document.createElement('button');
         projectBtn.type = 'button';
         projectBtn.textContent = e.title;
         projectBtn.addEventListener('click', () => {
-        loadProject(contentContainer, e, projectsList, parentContainer);
+            loadProject(contentContainer, e, projectsList, parentContainer);
         });
         projectLi.appendChild(projectBtn);
         projectsUl.appendChild(projectLi);
