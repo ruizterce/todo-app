@@ -1,11 +1,12 @@
 import './style.css';
 import Project from './project.js';
 import Todo from './todo.js';
-import { loadTodo, loadProject, createTodoPopup, loadProjectList } from './DOMHandler.js'
+import { loadTodo, loadProject, createTodoPopup, loadProjectsList } from './DOMHandler.js'
+import ProjectsList from './projectsList.js';
 
 const contentDiv = document.querySelector('#content');
 const nav = document.querySelector('nav');
-const projects = [];
+const projects = new ProjectsList([]);
 
 //Methods test
 //Create a new project
@@ -15,6 +16,6 @@ const todo1 = new Todo('Hey', 'Desc', '12-07-2024', 'low');
 project1.addTodo(todo1);
 
 //Load the project list into the nav bar
-loadProjectList(contentDiv,nav, projects);
+loadProjectsList(contentDiv, nav, projects);
 //Load the project into the DOM
-loadProject(contentDiv, projects[0]);
+loadProject(contentDiv, projects.projects[0], projects, nav);

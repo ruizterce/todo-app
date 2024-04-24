@@ -28,7 +28,7 @@ const loadTodo = (parentContainer, todo) => {
 }
 
 //Create a DOM element displaying the title of a project and the information of each todo inside it, and append itself to a parent container.
-const loadProject = (parentContainer, project) => {
+const loadProject = (parentContainer, project, projectsList, projectsListContainer) => {
 
     //Empty parent container
     parentContainer.innerHTML = '';
@@ -47,11 +47,11 @@ const loadProject = (parentContainer, project) => {
         loadTodo(container, e)
 
         const removeTodoBtn = document.createElement('button');
-        removeTodoBtn.textContent = 'Remove'
+        removeTodoBtn.textContent = 'Remove Todo'
 
         removeTodoBtn.addEventListener('click', () => {
             project.removeTodo(e); //Remove todo from the project
-            loadProject(parentContainer, project); //Update project in the DOM
+            loadProject(parentContainer, project, projectsList, projectsListContainer); //Update project in the DOM
         })
 
         container.appendChild(removeTodoBtn);
@@ -68,11 +68,20 @@ const loadProject = (parentContainer, project) => {
     parentContainer.appendChild(container);
 
     //Create and append a form to create a todo (hidden by default)
-    const formDiv = createTodoForm(parentContainer, project);
+    const formDiv = createTodoForm(parentContainer, project, projectsList);
+
+    const removeProjectBtn = document.createElement('button');
+    removeProjectBtn.textContent='Remove Project';
+    removeProjectBtn.addEventListener('click',()=>{
+        projectsList.removeProject(project);
+        loadProjectsList(parentContainer,projectsListContainer,projectsList);
+        parentContainer.innerHTML='';
+    })
+    parentContainer.appendChild(removeProjectBtn);
 }
 
 //Create a form element to add a new todo to a project and append itself to a parentContainer.
-const createTodoForm = (parentContainer, project) => {
+const createTodoForm = (parentContainer, project, projectsList, projectsListContainer) => {
 
     //Create the form element in a div container
     const formDiv = document.createElement('div');
@@ -119,7 +128,7 @@ const createTodoForm = (parentContainer, project) => {
 
         if (createTodoForm.reportValidity()) { //Check input field validity
             project.addTodo(new Todo(todoTitle.value, todoDesc.value, todoDueDate.value, todoPriority.value)); //Create a new todo in this project from input fields values
-            loadProject(parentContainer, project); //Update project in the DOM
+            loadProject(parentContainer, project, projectsList, projectsListContainer); //Update project in the DOM
         }
     })
 
@@ -135,7 +144,7 @@ const createTodoForm = (parentContainer, project) => {
 }
 
 //Create a DOM element displaying a list of projects, and append itself to a parent container.
-const loadProjectList = (contentContainer, parentContainer, projectsArray) => {
+const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
 
     //Empty parent container
     parentContainer.innerHTML = '';
@@ -149,19 +158,20 @@ const loadProjectList = (contentContainer, parentContainer, projectsArray) => {
     container.appendChild(title);
 
     //Create and append a list of projects
-    const projectsList = document.createElement('ul');
-    projectsArray.forEach((e) => {
+    const projectsUl = document.createElement('ul');
+    projectsList.projects.forEach((e) => {
         const projectLi= document.createElement('li');
+        //Add a projectBtn that calls loadProject
         const projectBtn = document.createElement('button');
         projectBtn.type = 'button';
         projectBtn.textContent = e.title;
         projectBtn.addEventListener('click', () => {
-        loadProject(contentContainer, e);
+        loadProject(contentContainer, e, projectsList, parentContainer);
         });
         projectLi.appendChild(projectBtn);
-        projectsList.appendChild(projectLi);
+        projectsUl.appendChild(projectLi);
     })
-    container.appendChild(projectsList);
+    container.appendChild(projectsUl);
 
     //Create and append a button to add a new project
     const addProjectBtn = document.createElement('button');
@@ -180,8 +190,8 @@ const loadProjectList = (contentContainer, parentContainer, projectsArray) => {
         createProjectBtn.type = 'button';
         createProjectBtn.textContent = 'Create';
         createProjectBtn.addEventListener('click', () => {
-            const project = new Project(projectTitle.value, projectsArray);
-            loadProjectList(contentContainer, parentContainer, projectsArray);
+            const project = new Project(projectTitle.value, projectsList);
+            loadProjectsList(contentContainer, parentContainer, projectsList);
         })
         container.appendChild(createProjectBtn);
 
@@ -203,5 +213,5 @@ const loadProjectList = (contentContainer, parentContainer, projectsArray) => {
     parentContainer.appendChild(container);
 }
 
-export { loadTodo, loadProject, createTodoForm, loadProjectList };
+export { loadTodo, loadProject, createTodoForm, loadProjectsList };
 
