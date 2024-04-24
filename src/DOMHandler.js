@@ -175,7 +175,9 @@ const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
     //Create and append a button to add a new project
     const addProjectBtn = document.createElement('button');
     addProjectBtn.type = 'button';
-    addProjectBtn.textContent = 'Add Project';
+    addProjectBtn.textContent = '+';
+    addProjectBtn.id = 'add-btn';
+    addProjectBtn.className = 'add-project-btns';
     addProjectBtn.addEventListener('click', () => {
         addProjectBtn.disabled = true;
 
@@ -184,30 +186,44 @@ const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
         projectTitle.placeholder = 'Project Title';
         container.appendChild(projectTitle);
 
+        const lineBreak = document.createElement('br');
+        container.appendChild(lineBreak);
+
         //Add a button to confirm project's creation
         const createProjectBtn = document.createElement('button');
         createProjectBtn.type = 'button';
-        createProjectBtn.textContent = 'Create';
+        createProjectBtn.textContent = '✓';
+        createProjectBtn.id = 'accept-btn';
+        createProjectBtn.className = 'add-project-btns';
         createProjectBtn.addEventListener('click', () => {
-            const project = new Project(projectTitle.value, projectsList);
-            loadProjectsList(contentContainer, parentContainer, projectsList);
+            console.log(projectTitle.value)
+            if (projectTitle.value) {
+                const project = new Project(projectTitle.value, projectsList);
+                loadProjectsList(contentContainer, parentContainer, projectsList);
+            } else {
+                projectTitle.placeholder='Please enter a project title';
+            }
         })
         container.appendChild(createProjectBtn);
 
         //Add a button to cancel project's creation
         const cancelCreateProjectBtn = document.createElement('button');
         cancelCreateProjectBtn.type = 'button';
-        cancelCreateProjectBtn.textContent = 'Cancel';
+        cancelCreateProjectBtn.textContent = 'X';
+        cancelCreateProjectBtn.id = 'cancel-btn';
+        cancelCreateProjectBtn.className = 'add-project-btns';
         cancelCreateProjectBtn.addEventListener('click', () => {
             addProjectBtn.disabled = false;
             cancelCreateProjectBtn.remove();
             createProjectBtn.remove();
+            lineBreak.remove();
             projectTitle.remove();
         })
         container.appendChild(cancelCreateProjectBtn);
 
     })
     container.appendChild(addProjectBtn);
+    container.appendChild(document.createElement('br'));
 
     parentContainer.appendChild(container);
 }
