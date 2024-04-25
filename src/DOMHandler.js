@@ -117,7 +117,7 @@ const createTodoForm = (parentContainer, project, projectsList, projectsListCont
                 <textarea placeholder="Todo description" name="desc" id="todoDesc"></textarea>
 
                 <label for="todoDueDate"><b>Due Date</b></label>
-                <input type="text" placeholder="Todo due date" name="dueDate" id="todoDueDate">
+                <input type="date" placeholder="Todo due date" name="dueDate" id="todoDueDate" required>
 
                 <label for="todoDesc"><b>Priority</b></label>
 

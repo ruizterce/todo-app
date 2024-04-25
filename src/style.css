@@ -166,6 +166,7 @@ header {
                     background-color: var(--alice-blue-2);
                     border-radius: 15px;
                     width: fit-content;
+                    white-space: nowrap;
                     padding: 1px 10px;
                 }
 
