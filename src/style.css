@@ -48,7 +48,7 @@ header {
         background-color: white;
         box-shadow: 1px 0px 5px var(--battleship-gray);
 
-        h2{
+        h2 {
             font-size: 1rem;
             color: var(--battleship-gray);
         }
@@ -136,7 +136,7 @@ header {
     overflow-y: auto;
     width: 100%;
 
-    h2{
+    h2 {
         color: var(--battleship-gray);
     }
 
@@ -145,63 +145,69 @@ header {
         display: flex;
         flex-wrap: wrap;
 
-        .todo-card {
-            margin: 10px;
-            background-color: var(--seasalt);
-            padding: 20px;
-            border-radius: 10px;
-            width: 200px;
+        .todo-wrapper {
 
-            .todo-title {
-                margin: 0px;
-                margin-bottom: 15px;
-                overflow-wrap: break-word;
-            }
+            .todo-card {
+                margin: 0 15px;
+                background-color: var(--seasalt);
+                padding: 20px;
+                border-radius: 10px;
+                width: 500px;
 
-            .todo-horizontal-div {
-                display: flex;
-
-                .todo-due-date {
+                .todo-title {
                     margin: 0px;
-                    background-color: var(--alice-blue-2);
-                    border-radius: 15px;
-                    width: fit-content;
-                    white-space: nowrap;
-                    padding: 1px 10px;
+                    margin-bottom: 15px;
+                    overflow-wrap: break-word;
                 }
 
-                .todo-priority {
-                    margin: 0px;
-                    background-color: var(--alice-blue-2);
-                    border-radius: 15px;
-                    width: fit-content;
-                    padding: 1px 10px;
+                .todo-horizontal-div {
+                    display: flex;
+
+                    .todo-due-date {
+                        margin: 0px;
+                        background-color: var(--alice-blue-2);
+                        border-radius: 15px;
+                        width: fit-content;
+                        white-space: nowrap;
+                        padding: 1px 10px;
+                    }
+
+                    .todo-priority {
+                        margin: 0px;
+                        background-color: var(--alice-blue-2);
+                        border-radius: 15px;
+                        width: fit-content;
+                        padding: 1px 10px;
+                    }
                 }
-            }
 
-            .todo-desc {
-                margin: 0px;
-                margin-top: 10px;
-                width: 100%;
-                overflow-wrap: break-word;
-            }
+                .todo-desc {
+                    margin: 0px;
+                    margin-top: 10px;
+                    width: 100%;
+                    overflow-wrap: break-word;
+                    font-size: 1rem;
+                }
 
+            }
         }
 
         .add-todo-btn {
-            margin: 10px;
+            margin: 30px 10px;
             width: 30px;
             height: 60px;
             border-radius: 15px;
             background-color: var(--accept-green);
             align-self: center;
+            position:relative;
+            top:15px;
         }
     }
 
     .remove-todo-btn {
         position: relative;
-        top: 0px;
-        left: -25px;
+        top: 15px;
+        left: 534px;
         width: 30px;
         height: 30px;
         border-radius: 15px;

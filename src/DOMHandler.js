@@ -59,7 +59,9 @@ const loadProject = (parentContainer, project, projectsList, projectsListContain
 
     //Create and append elements for each todo in this project and add a remove button for each one.
     project.todos.forEach((e) => {
-        loadTodo(todoContainer, e)
+        
+        const todoWrapper = document.createElement('div');
+        todoWrapper.className='todo-wrapper';
 
         const removeTodoBtn = document.createElement('button');
         removeTodoBtn.textContent = 'X'
@@ -69,8 +71,9 @@ const loadProject = (parentContainer, project, projectsList, projectsListContain
             project.removeTodo(e, projectsList); //Remove todo from the project
             loadProject(parentContainer, project, projectsList, projectsListContainer); //Update project in the DOM
         })
-
-        todoContainer.appendChild(removeTodoBtn);
+        todoWrapper.appendChild(removeTodoBtn);
+        loadTodo(todoWrapper, e);
+        todoContainer.appendChild(todoWrapper);
     });
 
     //Create and append a button that will show formDiv
