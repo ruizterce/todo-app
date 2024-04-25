@@ -1,21 +1,274 @@
+@font-face {
+    font-family: "DM Sans", sans-serif;
+    src: url('./fonts/DMSans-VariableFont_opsz\,wght.ttf') format('truetype');
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
 body {
+    font-family: "DM Sans", sans-serif;
     font-size: max(2vh, 18px);
     margin: 0px;
+    --white: #fdfdfdff;
+    --seasalt: #f9fafcff;
+    --antiflash-white: #f0f4f8ff;
+    --alice-blue: #e7ecf3ff;
+    --alice-blue-2: #dde3edff;
+    --battleship-gray: #888888ff;
+    --accept-green: #a1e8a1;
+    --cancel-red: #ebb0ad;
+    background-color: var(--alice-blue);
+    display: flex;
+}
+
+/*Reset buttons style*/
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
 }
 
 header {
-    width: 150px;
-    float: left;
-    display: inline;
-    margin: 0;
-    padding: 0 20px;
-    background-color: aquamarine;
+    nav {
+        width: 250px;
+        height: 100vh;
+        overflow-y: auto;
+        float: left;
+        display: inline;
+        margin: 0;
+        padding: 0 20px;
+        background-color: white;
+        box-shadow: 1px 0px 5px var(--battleship-gray);
+
+        h2{
+            font-size: 1rem;
+            color: var(--battleship-gray);
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                background-color: var(--antiflash-white);
+                border-radius: 5px;
+                overflow: hidden;
+
+                button {
+                    width: 100%;
+                    height: 100%;
+                    text-align: start;
+                    padding: 5px 10px;
+                }
+
+                button:active {
+                    background-color: aliceblue;
+                }
+            }
+        }
+
+        input {
+            width: 92%;
+            height: 100%;
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--alice-blue);
+        }
+
+        .add-project-btns {
+            margin: 3px;
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+        }
+
+        #add-btn {
+            background-color: var(--accept-green);
+        }
+
+        #add-btn:disabled {
+            background-color: var(--battleship-gray);
+        }
+
+        #add-btn:active {
+            background-color: var(--antiflash-white);
+        }
+
+        #accept-btn {
+            background-color: var(--accept-green);
+        }
+
+        #accept-btn:active {
+            background-color: var(--antiflash-white);
+        }
+
+        #cancel-btn {
+            background-color: var(--cancel-red);
+        }
+
+        #cancel-btn:active {
+            background-color: var(--antiflash-white);
+        }
+    }
 }
 
 #content {
-    background-color: aqua;
     float: left;
     margin: 0;
+    margin-left: 10px;
     padding: 0 20px;
     display: inline;
+    height: 100vh;
+    overflow-y: auto;
+    width: 100%;
+
+    h2{
+        color: var(--battleship-gray);
+    }
+
+    .todo-container {
+
+        display: flex;
+        flex-wrap: wrap;
+
+        .todo-card {
+            margin: 10px;
+            background-color: var(--seasalt);
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+
+            .todo-title {
+                margin: 0px;
+                margin-bottom: 15px;
+                overflow-wrap: break-word;
+            }
+
+            .todo-horizontal-div {
+                display: flex;
+
+                .todo-due-date {
+                    margin: 0px;
+                    background-color: var(--alice-blue-2);
+                    border-radius: 15px;
+                    width: fit-content;
+                    padding: 1px 10px;
+                }
+
+                .todo-priority {
+                    margin: 0px;
+                    background-color: var(--alice-blue-2);
+                    border-radius: 15px;
+                    width: fit-content;
+                    padding: 1px 10px;
+                }
+            }
+
+            .todo-desc {
+                margin: 0px;
+                margin-top: 10px;
+                width: 100%;
+                overflow-wrap: break-word;
+            }
+
+        }
+
+        .add-todo-btn {
+            margin: 10px;
+            width: 30px;
+            height: 60px;
+            border-radius: 15px;
+            background-color: var(--accept-green);
+            align-self: center;
+        }
+    }
+
+    .remove-todo-btn {
+        position: relative;
+        top: 0px;
+        left: -25px;
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: var(--cancel-red);
+    }
+
+    .remove-project-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: var(--cancel-red);
+        padding: 5px 10px;
+        border-radius: 15px;
+    }
+
+    #createTodoForm {
+        z-index: 1;
+        position: absolute;
+        left: 25%;
+        top: 12%;
+        width: 50%;
+        max-height: 80vh;
+        overflow: auto;
+        background-color: var(--seasalt);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 3px 3px 10px var(--battleship-gray);
+        display: flex;
+        flex-direction: column;
+
+        h3 {
+            margin-top: 0;
+        }
+
+        label {
+            margin: 10px 0px 5px;
+        }
+
+        input,
+        textarea {
+            font-family: "DM Sans", sans-serif;
+            font-size: 1rem;
+        }
+
+        #todoDesc {
+            height: 70px;
+            min-height: 30px;
+            resize: vertical;
+        }
+
+        .todoPrioritySet {
+            border: 0px;
+        }
+
+        #createTodoBtn {
+            margin: 10px;
+            border-radius: 15px;
+            padding: 5px 10px;
+            background-color: var(--accept-green);
+            align-self: center;
+        }
+
+        #cancelCreateTodoFormBtn {
+            margin: 5px;
+            border-radius: 15px;
+            padding: 5px 10px;
+            background-color: var(--cancel-red);
+            align-self: center;
+        }
+    }
 }

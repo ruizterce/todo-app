@@ -5,23 +5,34 @@ import Project from "./project"
 const loadTodo = (parentContainer, todo) => {
     //Create and append inner elements
     const container = document.createElement('div');
+    container.className = 'todo-card';
 
     const title = document.createElement('h3');
     title.textContent = todo.title;
+    title.className = 'todo-title';
 
     const desc = document.createElement('p');
     desc.textContent = todo.desc;
+    desc.className = 'todo-desc';
 
     const dueDate = document.createElement('p');
     dueDate.textContent = todo.dueDate;
+    dueDate.className = 'todo-due-date';
 
     const priority = document.createElement('p');
     priority.textContent = todo.priority;
+    priority.className = 'todo-priority';
+
+    const horizontalDiv = document.createElement('div');
+    horizontalDiv.className = 'todo-horizontal-div';
+
+    horizontalDiv.appendChild(dueDate);
+    horizontalDiv.appendChild(priority);
 
     container.appendChild(title);
+    container.appendChild(horizontalDiv);
     container.appendChild(desc);
-    container.appendChild(dueDate);
-    container.appendChild(priority);
+
 
     //Append this todo container to a parent container
     parentContainer.appendChild(container);
@@ -35,6 +46,7 @@ const loadProject = (parentContainer, project, projectsList, projectsListContain
 
     //Create container for this project
     const container = document.createElement('div');
+    container.id = 'project-container';
 
     //Create and append title element
     const title = document.createElement('h2');
@@ -42,41 +54,49 @@ const loadProject = (parentContainer, project, projectsList, projectsListContain
 
     container.appendChild(title);
 
+    const todoContainer = document.createElement('div');
+    todoContainer.className = 'todo-container';
+
     //Create and append elements for each todo in this project and add a remove button for each one.
     project.todos.forEach((e) => {
-        loadTodo(container, e)
+        loadTodo(todoContainer, e)
 
         const removeTodoBtn = document.createElement('button');
-        removeTodoBtn.textContent = 'Remove Todo'
+        removeTodoBtn.textContent = 'X'
+        removeTodoBtn.className = 'remove-todo-btn';
 
         removeTodoBtn.addEventListener('click', () => {
             project.removeTodo(e); //Remove todo from the project
             loadProject(parentContainer, project, projectsList, projectsListContainer); //Update project in the DOM
         })
 
-        container.appendChild(removeTodoBtn);
+        todoContainer.appendChild(removeTodoBtn);
     });
 
     //Create and append a button that will show formDiv
     const openCreateTodoForm = document.createElement('button');
     openCreateTodoForm.type = 'button';
-    openCreateTodoForm.textContent = 'Add Todo';
+    openCreateTodoForm.textContent = '+';
+    openCreateTodoForm.className = 'add-todo-btn';
     openCreateTodoForm.addEventListener('click', () => formDiv.style.display = 'block');
-    container.appendChild(openCreateTodoForm);
+    todoContainer.appendChild(openCreateTodoForm);
 
     //Append this project's container to a parent container
-    parentContainer.appendChild(container);
+    container.appendChild(todoContainer);
 
     //Create and append a form to create a todo (hidden by default)
     const formDiv = createTodoForm(parentContainer, project, projectsList, projectsListContainer);
 
     const removeProjectBtn = document.createElement('button');
     removeProjectBtn.textContent = 'Remove Project';
+    removeProjectBtn.className = 'remove-project-btn';
     removeProjectBtn.addEventListener('click', () => {
         projectsList.removeProject(project);
         loadProjectsList(parentContainer, projectsListContainer, projectsList);
         parentContainer.innerHTML = '';
     })
+
+    parentContainer.appendChild(container);
     parentContainer.appendChild(removeProjectBtn);
 }
 
@@ -94,19 +114,21 @@ const createTodoForm = (parentContainer, project, projectsList, projectsListCont
                 <input type="text" placeholder="Todo title" name="title" id="todoTitle" minlength="3" required>
 
                 <label for="todoDesc"><b>Description</b></label>
-                <input type="text" placeholder="Todo description" name="desc" id="todoDesc">
+                <textarea placeholder="Todo description" name="desc" id="todoDesc"></textarea>
 
                 <label for="todoDueDate"><b>Due Date</b></label>
                 <input type="text" placeholder="Todo due date" name="dueDate" id="todoDueDate">
 
                 <label for="todoDesc"><b>Priority</b></label>
 
-                <input type="radio" id="todoPriorityHigh" name="priority" value="high">
-                <label for="todoPriorityHigh">High</label><br>
-                <input type="radio" id="todoPriorityMedium" name="priority" value="medium" checked>
-                <label for="todoPriorityMedium">Medium</label><br>
-                <input type="radio" id="todoPriorityLow" name="priority" value="low">
-                <label for="todoPriorityLow">Low</label>
+                <fieldset class=todoPrioritySet>
+                    <input type="radio" id="todoPriorityHigh" name="priority" value="high">
+                    <label for="todoPriorityHigh">High</label><br>
+                    <input type="radio" id="todoPriorityMedium" name="priority" value="medium" checked>
+                    <label for="todoPriorityMedium">Medium</label><br>
+                    <input type="radio" id="todoPriorityLow" name="priority" value="low">
+                    <label for="todoPriorityLow">Low</label>
+                </fieldset>
 
                 <button type="submit" class="btn" id="createTodoBtn">Create</button>
                 <button type="button" class="btn" id="cancelCreateTodoFormBtn">Cancel</button>
@@ -201,7 +223,7 @@ const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
                 const project = new Project(projectTitle.value, projectsList);
                 loadProjectsList(contentContainer, parentContainer, projectsList);
             } else {
-                projectTitle.placeholder='Please enter a project title';
+                projectTitle.placeholder = 'Please enter a project title';
             }
         })
         container.appendChild(createProjectBtn);
