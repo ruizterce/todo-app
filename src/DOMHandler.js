@@ -1,5 +1,5 @@
 import Todo from "./todo";
-import Project from "./project"
+import Project from "./project";
 
 //Create a DOM element displaying the information of a todo and append itself to a parent container.
 const loadTodo = (parentContainer, todo) => {
@@ -66,7 +66,7 @@ const loadProject = (parentContainer, project, projectsList, projectsListContain
         removeTodoBtn.className = 'remove-todo-btn';
 
         removeTodoBtn.addEventListener('click', () => {
-            project.removeTodo(e); //Remove todo from the project
+            project.removeTodo(e, projectsList); //Remove todo from the project
             loadProject(parentContainer, project, projectsList, projectsListContainer); //Update project in the DOM
         })
 
@@ -149,7 +149,7 @@ const createTodoForm = (parentContainer, project, projectsList, projectsListCont
         const todoPriority = document.querySelector('input[name="priority"]:checked');
 
         if (createTodoForm.reportValidity()) { //Check input field validity
-            project.addTodo(new Todo(todoTitle.value, todoDesc.value, todoDueDate.value, todoPriority.value)); //Create a new todo in this project from input fields values
+            project.addTodo(new Todo(todoTitle.value, todoDesc.value, todoDueDate.value, todoPriority.value), projectsList); //Create a new todo in this project from input fields values
             loadProject(parentContainer, project, projectsList, projectsListContainer); //Update project in the DOM
         }
     })
@@ -218,7 +218,6 @@ const loadProjectsList = (contentContainer, parentContainer, projectsList) => {
         createProjectBtn.id = 'accept-btn';
         createProjectBtn.className = 'add-project-btns';
         createProjectBtn.addEventListener('click', () => {
-            console.log(projectTitle.value)
             if (projectTitle.value) {
                 const project = new Project(projectTitle.value, projectsList);
                 loadProjectsList(contentContainer, parentContainer, projectsList);
